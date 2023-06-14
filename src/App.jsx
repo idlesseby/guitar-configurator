@@ -1,9 +1,9 @@
 import React, { useRef } from "react";
-import { OrbitControls, Center, useGLTF, Environment, AccumulativeShadows, RandomizedLight } from '@react-three/drei'
-import { Canvas } from '@react-three/fiber'
+import { Center, useGLTF, Environment, AccumulativeShadows, RandomizedLight } from '@react-three/drei'
+import { Canvas, useFrame } from '@react-three/fiber'
+import { easing } from 'maath'
 
-
-export default function App({ position = [-1, 0, 2.5], fov = 25 }) {
+export default function App({ position = [0.36, -0.18, 0.44], fov = 25 }) {
   return (
     <Canvas
       shadows
@@ -13,22 +13,22 @@ export default function App({ position = [-1, 0, 2.5], fov = 25 }) {
     >
       <ambientLight intensity={0.5} />
       <Environment preset="city" />
-      <Center>
-        <Shirt/>
-        <Backdrop/>
-      </Center>
-      <OrbitControls/>
+      <CameraRig>
+        <Center>
+          <Shirt/>
+          <Backdrop/>
+        </Center>
+      </CameraRig>
     </Canvas>
   )
 }
 
 function Shirt(props) {
-
   const { nodes, materials } = useGLTF("/lespaul.glb");
 
   return (
     <group {...props} dispose={null}>
-      <group position={[0, -0.05, -0.07]}>
+      <group position={[0.15, -0.05, -0.05]}>
         <mesh
           castShadow
           receiveShadow
@@ -108,6 +108,21 @@ function Backdrop() {
     />
   </AccumulativeShadows>
   )
+}
+
+function CameraRig({ children }) {
+  const group = useRef()
+
+  useFrame((state, delta) => {
+    easing.dampE(
+      group.current.rotation,
+      [state.pointer.y / 10, state.pointer.x / 10, 0],
+      0.5,
+      delta
+    )
+  })
+
+  return <group ref={group}>{children}</group>
 }
 
 useGLTF.preload("/lespaul.glb");
