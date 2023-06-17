@@ -1,9 +1,12 @@
 import React, { useRef } from "react";
-import { Center, useGLTF, Environment, AccumulativeShadows, RandomizedLight } from '@react-three/drei'
+import { Center, useGLTF, Environment, AccumulativeShadows, RandomizedLight, OrbitControls } from '@react-three/drei'
 import { Canvas, useFrame } from '@react-three/fiber'
+import * as THREE from 'three'
 import { easing } from 'maath'
+import { useSnapshot } from 'valtio'
+import { states } from './store'
 
-export default function App({ position = [0.36, -0.18, 0.44], fov = 25 }) {
+export default function App({ position = states.cameraPos, fov = 25 }) {
   return (
     <Canvas
       shadows
@@ -12,23 +15,28 @@ export default function App({ position = [0.36, -0.18, 0.44], fov = 25 }) {
       eventPrefix="client"
     >
       <ambientLight intensity={0.5} />
-      <Environment preset="city" />
+      <Environment preset="studio" />
       <CameraRig>
         <Center>
           <Shirt/>
           <Backdrop/>
         </Center>
       </CameraRig>
+      <OrbitControls/>
     </Canvas>
   )
 }
 
 function Shirt(props) {
+  const snap = useSnapshot(states)
+
   const { nodes, materials } = useGLTF("/lespaul.glb");
+
+  materials.Finish.color = new THREE.Color(snap.selectedColor)
 
   return (
     <group {...props} dispose={null}>
-      <group position={[0.15, -0.05, -0.05]}>
+      <group position={[window.innerWidth * 0.00006, 0, 0]}>
         <mesh
           castShadow
           receiveShadow
@@ -83,14 +91,26 @@ function Shirt(props) {
 }
 
 function Backdrop() {
+  const shadows = useRef()
+
+  useFrame((delta) =>
+    easing.dampC(
+      shadows.current.getMesh().material.color,
+      states.selectedColor,
+      0.25,
+      delta
+    )
+  )
+
   return (
   <AccumulativeShadows
+    ref={shadows}
     temporal
     frames={60}
     alphaTest={0.85}
     scale={10}
-    rotation={[Math.PI / 2, 0, 0]}
-    position={[0, 0, -0.14]}
+    rotation={[Math.PI / 2, 0, 0.0]}
+    position={[0, 0, -0.05]}
   >
     <RandomizedLight
       amount={4}
@@ -114,6 +134,9 @@ function CameraRig({ children }) {
   const group = useRef()
 
   useFrame((state, delta) => {
+    state.camera.position.set(...states.cameraPos)
+    console.log(state.camera.position)
+    
     easing.dampE(
       group.current.rotation,
       [state.pointer.y / 10, state.pointer.x / 10, 0],

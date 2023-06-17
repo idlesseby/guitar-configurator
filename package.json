@@ -10,14 +10,14 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@pmndrs/branding": "^0.0.8",
     "@react-three/drei": "^9.74.15",
     "@react-three/fiber": "^8.13.3",
+    "gsap": "^3.12.1",
     "maath": "^0.6.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-icons": "^4.9.0",
-    "three": "^0.153.0"
+    "three": "^0.153.0",
+    "valtio": "^1.10.5"
   },
   "devDependencies": {
     "@types/react": "^18.0.37",
