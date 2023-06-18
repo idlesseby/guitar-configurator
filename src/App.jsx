@@ -36,7 +36,7 @@ function Shirt(props) {
 
   return (
     <group {...props} dispose={null}>
-      <group position={[window.innerWidth * 0.00006, 0, 0]}>
+      <group>
         <mesh
           castShadow
           receiveShadow
@@ -115,7 +115,7 @@ function Backdrop() {
     <RandomizedLight
       amount={4}
       radius={9}
-      intensity={0.55}
+      intensity={0.75}
       ambient={0.25}
       position={[5, 5, -10]}
     />
@@ -135,6 +135,7 @@ function CameraRig({ children }) {
 
   useFrame((state, delta) => {
     state.camera.position.set(...states.cameraPos)
+    state.camera.lookAt(...states.cameraFocus)
     console.log(state.camera.position)
     
     easing.dampE(

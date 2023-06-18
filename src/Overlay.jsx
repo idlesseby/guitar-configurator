@@ -30,8 +30,8 @@ function Intro() {
               className="main--button"
               onClick={() => {
                 states.intro = false
-                states.cameraPos = [0, 0, 2]
-                //gsap.to(states.cameraPos, {...[0, 0.1, 1], duration: 1})
+                gsap.to(states.cameraFocus, {...[0, 0.1, 0], duration: 1})
+                gsap.to(states.cameraPos, {...[0, 0, 1.75], duration: 1})
             }}>
               CUSTOMIZE IT
             </button>
@@ -62,7 +62,8 @@ function Customizer() {
           className="exit" 
           onClick={() => {
             states.intro = true
-            states.cameraPos = [0.36, 0.07, 0.5]
+            gsap.to(states.cameraFocus, {...[-window.innerWidth * 0.00007,0,0], duration: 1})
+            gsap.to(states.cameraPos, {...[0.23, 0.07, 0.57], duration: 1})
         }}>
           GO BACK
         </button>
