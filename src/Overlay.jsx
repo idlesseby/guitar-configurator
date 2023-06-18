@@ -1,5 +1,6 @@
 import { useSnapshot } from 'valtio'
 import { states } from './store'
+import { FaArrowLeft } from "react-icons/fa";
 import gsap from "gsap";
 
 export default function Overlay() {
@@ -44,9 +45,31 @@ function Intro() {
 
 function Customizer() {
 
+  let partCamPos = {
+    'Finish': [0, 0, 1.75],
+    'Knobs': [0.1, -0.3, 0.2],
+    'Ivory': [0, 0, 2.5]
+  }
+
+  let partCamFocus = {
+    'Finish': [0, 0.1, 0],
+    'Knobs': [0.05, -0.05, 0],
+    'Ivory': [0, 0.3, 0]
+  }
+
   return(
     <section key="custom">
       <div className="customizer">
+        <button 
+          className="exit" 
+          onClick={() => {
+            states.intro = true
+            gsap.to(states.cameraFocus, {...[-window.innerWidth * 0.00007,0,0], duration: 1})
+            gsap.to(states.cameraPos, {...[0.23, 0.07, 0.57], duration: 1})
+          }}>
+          <FaArrowLeft />
+        </button>
+        <span>Choose a color</span>
         <div className="color-options">
           {states.colors.map((color) => (
             <div
@@ -54,19 +77,23 @@ function Customizer() {
               className="circle"
               style={{ background: color }}
               onClick={() => {
-                states.selectedColor = color
+                states['selected' + states.selectedPart + 'Color'] = color
               }}></div>
           ))}
         </div>
-        <button 
-          className="exit" 
-          onClick={() => {
-            states.intro = true
-            gsap.to(states.cameraFocus, {...[-window.innerWidth * 0.00007,0,0], duration: 1})
-            gsap.to(states.cameraPos, {...[0.23, 0.07, 0.57], duration: 1})
-        }}>
-          GO BACK
-        </button>
+        <span>Choose a part</span>
+        <div className='part-options'>
+          {states.parts.map((part) => (
+            <div
+              key={part}
+              className="part"
+              onClick={() => {
+                states.selectedPart = part
+                gsap.to(states.cameraPos, {...partCamPos[states.selectedPart], duration: 1})
+                gsap.to(states.cameraFocus, {...partCamFocus[states.selectedPart], duration: 1})
+              }}>{part}</div>
+          ))}
+        </div>
       </div>
     </section>
   )

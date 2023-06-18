@@ -15,14 +15,13 @@ export default function App({ position = states.cameraPos, fov = 25 }) {
       eventPrefix="client"
     >
       <ambientLight intensity={0.5} />
-      <Environment preset="studio" />
+      <Environment preset="city" />
       <CameraRig>
         <Center>
           <Shirt/>
           <Backdrop/>
         </Center>
       </CameraRig>
-      <OrbitControls/>
     </Canvas>
   )
 }
@@ -32,7 +31,9 @@ function Shirt(props) {
 
   const { nodes, materials } = useGLTF("/lespaul.glb");
 
-  materials.Finish.color = new THREE.Color(snap.selectedColor)
+  materials.Finish.color = new THREE.Color(snap.selectedFinishColor)
+  materials.Knobs.color = new THREE.Color(snap.selectedKnobsColor)
+  materials.Ivory.color = new THREE.Color(snap.selectedIvoryColor)
 
   return (
     <group {...props} dispose={null}>
@@ -93,14 +94,14 @@ function Shirt(props) {
 function Backdrop() {
   const shadows = useRef()
 
-  useFrame((delta) =>
-    easing.dampC(
-      shadows.current.getMesh().material.color,
-      states.selectedColor,
-      0.25,
-      delta
-    )
-  )
+  // useFrame((delta) =>
+  //   easing.dampC(
+  //     shadows.current.getMesh().material.color,
+  //     states.selectedColor,
+  //     0.25,
+  //     delta
+  //   )
+  // )
 
   return (
   <AccumulativeShadows
@@ -136,7 +137,7 @@ function CameraRig({ children }) {
   useFrame((state, delta) => {
     state.camera.position.set(...states.cameraPos)
     state.camera.lookAt(...states.cameraFocus)
-    console.log(state.camera.position)
+    //console.log(state.camera.position)
     
     easing.dampE(
       group.current.rotation,
