@@ -12,6 +12,7 @@ html {
 :root {
   --fs-header: 4rem;
   --fs-text: 1rem;
+  --fs-part: 1.5rem;
   --fs-button: 1rem;
   --fs-button-icon: 2rem;
 }
@@ -20,6 +21,7 @@ html {
   :root {
     --fs-header: 14rem;
     --fs-text: 1.5rem;
+    --fs-part: 3rem;
     --fs-button-icon: 2rem;
   }
 }
@@ -83,19 +85,21 @@ section {
   font-style: italic;
   line-height: var(--fs-header);
   margin: 0;
+  color: white;
 }
 
 .main--content p {
   font-size: var(--fs-text);
   margin-bottom: 48px;
   line-height: var(--fs-text);
+  color: white;
 }
 
 .main--button {
-  background-color: black;
+  background-color: white;
   border: none;
   border-radius: 8px;
-  color: white;
+  color: black;
   font-size: var(--fs-button);
   font-weight: bolder;
   pointer-events: all;
@@ -108,21 +112,21 @@ section {
 }
 
 .main--button:hover {
-  background-color: white;
-  color: black;
+  background-color: black;
+  color: white;
 }
 
 /* COLOR PICKER */
 
 .customizer {
-  display: flex;
-  justify-content: flex-end;
-  flex-direction: column;
   height: 100%;
   width: 100%;
 }
 
 .color-options {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
   display: flex;
   gap: 10px;
   margin-bottom: 20px;
@@ -134,7 +138,7 @@ section {
   width: 30px;
   height: 30px;
   border-radius: 50%;
-  border: 1px solid black;
+  border: 1px solid rgb(46, 46, 46, 0.2);
 }
 
 .circle:hover {
@@ -144,26 +148,31 @@ section {
 
 .part-options {
   display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-end;
+  height: 100%;
+  width: 100%;
   gap: 10px;
   margin-bottom: 20px;
   padding: 15px 15px 0 0;
-  align-items: center;
 }
 
 .part {
-  width: 128px;
-  height: 128px;
-  background-color: white;
-  border: 1px solid black;
+  color: rgb(66, 66, 66, 0.7);
+  font-size: var(--fs-part);
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
 .part:hover {
-  background-color: black;
   color: white;
   cursor: pointer;
+}
+
+.active {
+  color: white;
 }
 
 .exit {

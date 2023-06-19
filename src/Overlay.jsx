@@ -8,7 +8,7 @@ export default function Overlay() {
 
   return(
     <div className="container">
-      {snap.intro ? <Intro /> : <Customizer />}
+      {states.intro ? <Intro /> : <Customizer />}
     </div>
     
   )
@@ -31,7 +31,7 @@ function Intro() {
               className="main--button"
               onClick={() => {
                 states.intro = false
-                gsap.to(states.cameraFocus, {...[0, 0.1, 0], duration: 1})
+                gsap.to(states.cameraFocus, {...[0, 0, 0], duration: 1})
                 gsap.to(states.cameraPos, {...[0, 0, 1.75], duration: 1})
             }}>
               CUSTOMIZE IT
@@ -44,18 +44,22 @@ function Intro() {
 }
 
 function Customizer() {
+  const snap = useSnapshot(states)
 
-  let partCamPos = {
+  const partCamFocus = {
+    'Finish': [0, 0, 0],
+    'Knobs': [0.06, -0.2, 0],
+    'Ivory': [0, 0.2, 0]
+  }
+
+  const partCamPos = {
     'Finish': [0, 0, 1.75],
-    'Knobs': [0.1, -0.3, 0.2],
-    'Ivory': [0, 0, 2.5]
+    'Knobs': [0.1, -0.3, 0.5],
+    'Ivory': [0, 0.2, 0.5]
   }
 
-  let partCamFocus = {
-    'Finish': [0, 0.1, 0],
-    'Knobs': [0.05, -0.05, 0],
-    'Ivory': [0, 0.3, 0]
-  }
+  const parts = ['Finish', 'Knobs', 'Ivory']
+  const colors = ['#fff', '#222', '#ffd700', '#c0c0c0', '#008b00', '#00008b', '#8b0000']
 
   return(
     <section key="custom">
@@ -64,14 +68,13 @@ function Customizer() {
           className="exit" 
           onClick={() => {
             states.intro = true
-            gsap.to(states.cameraFocus, {...[-window.innerWidth * 0.00007,0,0], duration: 1})
+            gsap.to(states.cameraFocus, {...[-window.innerWidth * 0.00007,-0.12,0], duration: 1})
             gsap.to(states.cameraPos, {...[0.23, 0.07, 0.57], duration: 1})
           }}>
-          <FaArrowLeft />
+          <FaArrowLeft color='white'/>
         </button>
-        <span>Choose a color</span>
         <div className="color-options">
-          {states.colors.map((color) => (
+          {colors.map((color) => (
             <div
               key={color}
               className="circle"
@@ -81,12 +84,11 @@ function Customizer() {
               }}></div>
           ))}
         </div>
-        <span>Choose a part</span>
         <div className='part-options'>
-          {states.parts.map((part) => (
+          {parts.map((part) => (
             <div
               key={part}
-              className="part"
+              className={`part ${part === states.selectedPart ? 'active' : ''}`}
               onClick={() => {
                 states.selectedPart = part
                 gsap.to(states.cameraPos, {...partCamPos[states.selectedPart], duration: 1})

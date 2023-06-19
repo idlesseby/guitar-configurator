@@ -1,8 +1,7 @@
 import React, { useRef } from "react";
-import { Center, useGLTF, Environment, AccumulativeShadows, RandomizedLight, OrbitControls } from '@react-three/drei'
+import { Center, useGLTF, Environment, MeshReflectorMaterial, PresentationControls } from '@react-three/drei'
 import { Canvas, useFrame } from '@react-three/fiber'
 import * as THREE from 'three'
-import { easing } from 'maath'
 import { useSnapshot } from 'valtio'
 import { states } from './store'
 
@@ -14,14 +13,31 @@ export default function App({ position = states.cameraPos, fov = 25 }) {
       eventSource={document.getElementById('root')}
       eventPrefix="client"
     >
-      <ambientLight intensity={0.5} />
+      <color attach="background" args={['#121213']} />
+      <fog attach="fog" args={['#121213', 0, 15]} />
       <Environment preset="city" />
-      <CameraRig>
-        <Center>
-          <Shirt/>
-          <Backdrop/>
-        </Center>
-      </CameraRig>
+      <PresentationControls speed={1.5} global zoom={0.7} polar={[-0.1, Math.PI / 8]}>
+        <CameraRig>
+          <Center>
+            <Shirt/>
+          </Center>
+        </CameraRig>
+        <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0,-0.32,0]}>
+          <planeGeometry args={[170, 170]} />
+          <MeshReflectorMaterial
+            blur={[300, 100]}
+            resolution={2048}
+            mixBlur={1}
+            mixStrength={40}
+            roughness={1}
+            depthScale={1.2}
+            minDepthThreshold={0.4}
+            maxDepthThreshold={1.4}
+            color="#101010"
+            metalness={0.5}
+          />
+        </mesh>
+      </PresentationControls>
     </Canvas>
   )
 }
@@ -91,60 +107,13 @@ function Shirt(props) {
   )
 }
 
-function Backdrop() {
-  const shadows = useRef()
-
-  // useFrame((delta) =>
-  //   easing.dampC(
-  //     shadows.current.getMesh().material.color,
-  //     states.selectedColor,
-  //     0.25,
-  //     delta
-  //   )
-  // )
-
-  return (
-  <AccumulativeShadows
-    ref={shadows}
-    temporal
-    frames={60}
-    alphaTest={0.85}
-    scale={10}
-    rotation={[Math.PI / 2, 0, 0.0]}
-    position={[0, 0, -0.05]}
-  >
-    <RandomizedLight
-      amount={4}
-      radius={9}
-      intensity={0.75}
-      ambient={0.25}
-      position={[5, 5, -10]}
-    />
-    <RandomizedLight
-      amount={4}
-      radius={5}
-      intensity={0.25}
-      ambient={0.55}
-      position={[-5, 5, -9]}
-    />
-  </AccumulativeShadows>
-  )
-}
-
 function CameraRig({ children }) {
   const group = useRef()
 
-  useFrame((state, delta) => {
+  useFrame((state) => {
     state.camera.position.set(...states.cameraPos)
     state.camera.lookAt(...states.cameraFocus)
     //console.log(state.camera.position)
-    
-    easing.dampE(
-      group.current.rotation,
-      [state.pointer.y / 10, state.pointer.x / 10, 0],
-      0.5,
-      delta
-    )
   })
 
   return <group ref={group}>{children}</group>
