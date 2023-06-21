@@ -7,6 +7,10 @@ const states = proxy({
   selectedFinishColor: '#fff',
   selectedKnobsColor: '#222',
   selectedIvoryColor: '#222',
+  selectedPlasticColor: '#222',
+  selectedFretboardColor: '#000',
+  selectedMetalColor: '#ffd700',
+  selectedStringsColor: '#545761',
   selectedPart: 'Finish'
 })
 

@@ -50,6 +50,10 @@ function Shirt(props) {
   materials.Finish.color = new THREE.Color(snap.selectedFinishColor)
   materials.Knobs.color = new THREE.Color(snap.selectedKnobsColor)
   materials.Ivory.color = new THREE.Color(snap.selectedIvoryColor)
+  materials.Plastic.color = new THREE.Color(snap.selectedPlasticColor) 
+  materials['Fretboard Wood'].color = new THREE.Color(snap.selectedFretboardColor)
+  materials['Silver Metal'].color = new THREE.Color(snap.selectedStringsColor)
+  materials['Golden Metal'].color = new THREE.Color(snap.selectedMetalColor)
 
   return (
     <group {...props} dispose={null}>
