@@ -10,19 +10,17 @@ html {
 }
 
 :root {
-  --fs-header: 4rem;
+  --fs-header: 5rem;
   --fs-text: 1rem;
-  --fs-part: 1.5rem;
+  --fs-part: 0.75rem;
   --fs-button: 1rem;
-  --fs-button-icon: 2rem;
 }
 
 @media (min-width: 640px) {
   :root {
     --fs-header: 14rem;
     --fs-text: 1.5rem;
-    --fs-part: 3rem;
-    --fs-button-icon: 2rem;
+    --fs-part: 1.25rem;
   }
 }
 
@@ -44,7 +42,7 @@ body,
 
 body {
   background: #f0f0f0;
-  font-family: 'Inter', sans-serif;
+  font-family: sans-serif;
 }
 
 canvas {
@@ -73,10 +71,22 @@ section {
   width: 100%;
 }
 
+.main--container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .main--container.hidden {
   visibility: hidden;
   opacity: 0;
   pointer-events: none;
+}
+
+.main--content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .main--container h1 {
@@ -84,15 +94,17 @@ section {
   font-size: var(--fs-header);
   font-style: italic;
   line-height: var(--fs-header);
-  margin: 0;
+  margin: 0 0 12px 0;
   color: white;
 }
 
 .main--content p {
   font-size: var(--fs-text);
-  margin-bottom: 48px;
+  margin: 0 0 24px 0;
   line-height: var(--fs-text);
   color: white;
+  width: 85%;
+  text-align: center;
 }
 
 .main--button {
@@ -107,12 +119,14 @@ section {
   text-transform: uppercase;
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 15px;
   padding: 16px 32px;
+  width: 180px;
 }
 
 .main--button:hover {
-  background-color: black;
+  background-color: #222;
   color: white;
 }
 
@@ -121,22 +135,53 @@ section {
 .customizer {
   height: 100%;
   width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.options {
+  height: 100px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.part-options {
+  display: flex;
+  justify-content: space-around;
+  gap: 10px;
+  color: white;
+  margin-bottom: 8px;
+}
+
+.part {
+  width: 40px;
+  height: 40px;
+  color: rgb(66, 66, 66, 0.7);
+  font-size: var(--fs-part);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid rgb(66, 66, 66, 0.7);
+}
+
+.part:hover {
+  color: white;
+  border-color: white;
+  cursor: pointer;
 }
 
 .color-options {
-  position: absolute;
-  bottom: 20px;
-  left: 20px;
+  width: 100%;
   display: flex;
+  justify-content: center;
   gap: 10px;
-  margin-bottom: 20px;
-  padding: 15px 15px 0 0;
-  align-items: center;
 }
 
 .circle {
-  width: 30px;
-  height: 30px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
   border: 1px solid rgb(46, 46, 46, 0.2);
 }
@@ -146,50 +191,6 @@ section {
   cursor: pointer;
 }
 
-.part-options {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: flex-end;
-  height: 100%;
-  width: 100%;
-  gap: 10px;
-  margin-bottom: 20px;
-  padding: 15px 15px 0 0;
-}
-
-.part {
-  color: rgb(66, 66, 66, 0.7);
-  font-size: var(--fs-part);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.part:hover {
-  color: white;
-  cursor: pointer;
-}
-
-.active {
-  color: white;
-}
-
-.exit {
-  position: absolute;
-  top: 20px;
-  left: 20px;
-  font-size: var(--fs-button-icon);
-  border: none;
-  pointer-events: all;
-  cursor: pointer;
-  background: none;
-}
-
-.exit:hover {
-  color: white;
-}
-
 /* RESPONSIVE DESIGN */
 
 @media (min-width: 640px) {
@@ -197,13 +198,48 @@ section {
     display: block;
   }
 
+  .customizer {
+    justify-content: center;
+  }
+
   .main--container {
+    display: block;
     margin-left: 10rem;
     margin-top: 12rem;
   }
 
   .main--content {
+    display: block;
     position: relative;
     left: 1.5rem;
   }
+
+  .main--content p {
+    width: 40%;
+    margin-bottom: 48px;
+    text-align: left;
+  }
+
+  .part-options {
+    display: flex;
+    justify-content: space-around;
+    gap: 10px;
+    color: white;
+    margin-bottom: 8px;
+  }
+
+  .part {
+    width: 100px;
+    height: 100px;
+    padding: 15px;
+  }
+
+  .color-options {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    position: absolute;
+    bottom: 36px;
+  } 
 }

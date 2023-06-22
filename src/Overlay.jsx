@@ -1,24 +1,26 @@
 import { useSnapshot } from 'valtio'
 import { states } from './store'
-import { FaArrowLeft } from "react-icons/fa";
+import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import gsap from "gsap";
 
+let count = 0
+
 const partCamFocus = {
-  'Finish': [0, 0, 0],
-  'Knobs': [0.06, -0.2, 0],
+  'Finish': [0, -0.05, 0],
+  'Knobs': [0.06, -0.225, 0],
   'Ivory': [0, 0.225, 0],
   'Plastic': [0, -0.15, 0],
-  'Fretboard': [0, 0.1, 0],
+  'Fretboard': [0, 0.0625, 0],
   'Metal': [0, -0.15, 0],
   'Strings': [0, 0.1, 0],
 }
 
 const partCamPos = {
-  'Finish': [0, 0, 1.75],
-  'Knobs': [0.1, -0.3, 0.5],
+  'Finish': [0, -0.05, 1.75],
+  'Knobs': [0.1, -0.325, 0.5],
   'Ivory': [0, 0.225, 0.5],
   'Plastic': [0, -0.15, 0.75],
-  'Fretboard': [0, 0.1, 1],
+  'Fretboard': [0, 0.0625, 1],
   'Metal': [0, -0.15, 0.75],
   'Strings': [0, 0.1, 0.5],
 }
@@ -54,21 +56,19 @@ function Intro() {
           <h1>CUSTOM <br/> GUITAR</h1>
         </div>
         <div className="main--content">
-          <div>
-            <p>
-              Unleash your imagination with this brand new <strong>3D customization tool </strong>
-              <br/> and create your own unique and exclusive guitar.
-            </p>
-            <button 
-              className="main--button"
-              onClick={() => {
-                states.intro = false
-                gsap.to(states.cameraPos, {...partCamPos[states.selectedPart], duration: 1})
-                gsap.to(states.cameraFocus, {...partCamFocus[states.selectedPart], duration: 1})
-            }}>
-              CUSTOMIZE IT
-            </button>
-          </div>
+          <p>
+            Unleash your imagination with this brand new <strong>3D customization tool </strong>
+            and create your own unique and exclusive guitar.
+          </p>
+          <button 
+            className="main--button"
+            onClick={() => {
+              states.intro = false
+              gsap.to(states.cameraPos, {...partCamPos[states.selectedPart], duration: 1})
+              gsap.to(states.cameraFocus, {...partCamFocus[states.selectedPart], duration: 1})
+          }}>
+            CUSTOMIZE IT
+          </button>
         </div>
       </div>
     </section>
@@ -81,37 +81,49 @@ function Customizer() {
   return(
     <section key="custom">
       <div className="customizer">
-        <button 
-          className="exit" 
-          onClick={() => {
-            states.intro = true
-            gsap.to(states.cameraFocus, {...[-window.innerWidth * 0.00007,-0.12,0], duration: 1})
-            gsap.to(states.cameraPos, {...[0.23, 0.07, 0.57], duration: 1})
-          }}>
-          <FaArrowLeft color='white'/>
-        </button>
-        <div className='part-options'>
-          {parts.map((part) => (
+        <div className="options">
+          <div className='part-options'>
             <div
-              key={part}
-              className={`part ${part === states.selectedPart ? 'active' : ''}`}
               onClick={() => {
-                states.selectedPart = part
+                if(count === 0) {
+                  count = 6
+                } else {
+                  count -= 1
+                }
+                states.selectedPart = parts[count]
                 gsap.to(states.cameraPos, {...partCamPos[states.selectedPart], duration: 1})
                 gsap.to(states.cameraFocus, {...partCamFocus[states.selectedPart], duration: 1})
-              }}>{part}</div>
-          ))}
-        </div>
-        <div className="color-options">
-          {colors[states.selectedPart + 'Colors'].map((color) => (
+              }}
+            >
+              <FaArrowLeft/>
+            </div>
+            <div style={{color: 'white'}}>{states.selectedPart}</div>
             <div
-              key={color}
-              className="circle"
-              style={{ background: color }}
               onClick={() => {
-                states['selected' + states.selectedPart + 'Color'] = color
-              }}></div>
-          ))}
+                if(count === 6) {
+                  count = 0
+                } else {
+                  count += 1
+                }
+                states.selectedPart = parts[count]
+                gsap.to(states.cameraPos, {...partCamPos[states.selectedPart], duration: 1})
+                gsap.to(states.cameraFocus, {...partCamFocus[states.selectedPart], duration: 1})
+              }}
+            >
+              <FaArrowRight/>
+            </div>
+          </div>
+          <div className="color-options">
+            {colors[states.selectedPart + 'Colors'].map((color) => (
+              <div
+                key={color}
+                className="circle"
+                style={{ background: color }}
+                onClick={() => {
+                  states['selected' + states.selectedPart + 'Color'] = color
+                }}></div>
+            ))}
+          </div>
         </div>
       </div>
     </section>

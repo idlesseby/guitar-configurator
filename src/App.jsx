@@ -117,7 +117,6 @@ function CameraRig({ children }) {
   useFrame((state) => {
     state.camera.position.set(...states.cameraPos)
     state.camera.lookAt(...states.cameraFocus)
-    //console.log(state.camera.position)
   })
 
   return <group ref={group}>{children}</group>
