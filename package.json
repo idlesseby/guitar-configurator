@@ -13,6 +13,7 @@
     "@react-three/drei": "^9.74.15",
     "@react-three/fiber": "^8.13.3",
     "gsap": "^3.12.1",
+    "lamina": "^1.1.23",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-icons": "^4.9.0",

@@ -1,6 +1,6 @@
 import { useSnapshot } from 'valtio'
 import { states } from './store'
-import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
+import { BsArrowLeft, BsArrowRight } from "react-icons/bs";
 import gsap from "gsap";
 
 let count = 0
@@ -95,7 +95,7 @@ function Customizer() {
                 gsap.to(states.cameraFocus, {...partCamFocus[states.selectedPart], duration: 1})
               }}
             >
-              <FaArrowLeft/>
+              <BsArrowLeft style={{fontSize: '24px'}} />
             </div>
             <div style={{color: 'white'}}>{states.selectedPart}</div>
             <div
@@ -110,7 +110,7 @@ function Customizer() {
                 gsap.to(states.cameraFocus, {...partCamFocus[states.selectedPart], duration: 1})
               }}
             >
-              <FaArrowRight/>
+              <BsArrowRight style={{fontSize: '24px'}}/>
             </div>
           </div>
           <div className="color-options">

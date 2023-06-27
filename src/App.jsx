@@ -1,5 +1,5 @@
 import React, { useRef } from "react";
-import { Center, useGLTF, Environment, MeshReflectorMaterial, PresentationControls } from '@react-three/drei'
+import { Center, useGLTF, Environment, PresentationControls, AccumulativeShadows, RandomizedLight } from '@react-three/drei'
 import { Canvas, useFrame } from '@react-three/fiber'
 import * as THREE from 'three'
 import { useSnapshot } from 'valtio'
@@ -13,36 +13,25 @@ export default function App({ position = states.cameraPos, fov = 25 }) {
       eventSource={document.getElementById('root')}
       eventPrefix="client"
     >
-      <color attach="background" args={['#121213']} />
-      <fog attach="fog" args={['#121213', 0, 15]} />
+      <color attach="background" args={['#C1D1FF']} />
+      <spotLight position={[10, 20, 10]} penumbra={1} intensity={0.5} color="#FFBC68" />
+      <ambientLight intensity={0.25} />
       <Environment preset="city" />
       <PresentationControls speed={1.5} global zoom={0.7} polar={[-0.1, Math.PI / 8]}>
         <CameraRig>
           <Center>
-            <Shirt/>
+            <Guitar/>
           </Center>
         </CameraRig>
-        <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0,-0.32,0]}>
-          <planeGeometry args={[170, 170]} />
-          <MeshReflectorMaterial
-            blur={[300, 100]}
-            resolution={2048}
-            mixBlur={1}
-            mixStrength={40}
-            roughness={1}
-            depthScale={1.2}
-            minDepthThreshold={0.4}
-            maxDepthThreshold={1.4}
-            color="#101010"
-            metalness={0.5}
-          />
-        </mesh>
+        <AccumulativeShadows position={[0, -0.325, 0]} frames={100} alphaTest={0.9} scale={10}>
+          <RandomizedLight amount={8} radius={10} ambient={0.5} position={[1, 5, -1]} />
+        </AccumulativeShadows>
       </PresentationControls>
     </Canvas>
   )
 }
 
-function Shirt(props) {
+function Guitar(props) {
   const snap = useSnapshot(states)
 
   const { nodes, materials } = useGLTF("/lespaul.glb");
