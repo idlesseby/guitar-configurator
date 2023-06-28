@@ -12,7 +12,7 @@ html {
 :root {
   --fs-header: 5rem;
   --fs-text: 1rem;
-  --fs-part: 0.75rem;
+  --fs-part: 1.5rem;
   --fs-button: 1rem;
 }
 
@@ -20,7 +20,7 @@ html {
   :root {
     --fs-header: 14rem;
     --fs-text: 1.5rem;
-    --fs-part: 1.25rem;
+    --fs-part: 3rem;
   }
 }
 
@@ -41,7 +41,8 @@ body,
 }
 
 body {
-  background: #f0f0f0;
+  background-color: #8EC5FC;
+  background-image: linear-gradient(62deg, #8EC5FC 0%, #E0C3FC 100%);
   font-family: sans-serif;
 }
 
@@ -69,6 +70,11 @@ section {
   justify-content: center;
   height: 100%;
   width: 100%;
+}
+
+#main {
+  background-color: #8EC5FC;
+  background-image: linear-gradient(62deg, #8EC5FC 0%, #E0C3FC 100%);
 }
 
 .main--container {
@@ -126,7 +132,8 @@ section {
 }
 
 .main--button:hover {
-  background-color: #222;
+  background-color: #E0C3FC;
+  background-image: linear-gradient(62deg, #8EC5FC 0%, #E0C3FC 100%);
   color: white;
 }
 
@@ -145,25 +152,25 @@ section {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  background-color: rgb(255, 255, 255, 0.1);
 }
 
 .part-options {
   display: flex;
-  justify-content: space-around;
-  gap: 10px;
+  justify-content: space-between;
+  align-items: center;
   color: white;
-  margin-bottom: 8px;
+  margin: 0 48px 8px 48px;
 }
 
-.part {
-  width: 40px;
-  height: 40px;
-  color: rgb(66, 66, 66, 0.7);
+.part-arrow {
+  font-size: 32px;
+  color: white;
+}
+
+.part-name {
   font-size: var(--fs-part);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border: 1px solid rgb(66, 66, 66, 0.7);
+  color: white;
 }
 
 .part:hover {
@@ -176,14 +183,14 @@ section {
   width: 100%;
   display: flex;
   justify-content: center;
-  gap: 10px;
+  gap: 12px;
 }
 
 .circle {
-  width: 40px;
-  height: 40px;
+  width: 32px;
+  height: 32px;
   border-radius: 50%;
-  border: 1px solid rgb(46, 46, 46, 0.2);
+  border: 1px solid rgb(255, 255, 255, 0.2);
 }
 
 .circle:hover {
@@ -200,6 +207,11 @@ section {
 
   .customizer {
     justify-content: center;
+  }
+
+  #main {
+    background-color: transparent;
+    background-image: none;
   }
 
   .main--container {
@@ -220,6 +232,10 @@ section {
     text-align: left;
   }
 
+  .options {
+    background: none;
+  }
+
   .part-options {
     display: flex;
     justify-content: space-around;
@@ -228,10 +244,26 @@ section {
     margin-bottom: 8px;
   }
 
-  .part {
-    width: 100px;
-    height: 100px;
-    padding: 15px;
+  .part-arrow {
+    font-size: 60px;
+    color: white;
+  }
+
+  .arrow-left {
+    position: absolute;
+    left: 160px;
+  }
+
+  .arrow-right {
+    position: absolute;
+    right: 160px;
+  }
+
+  .part-name {
+    font-size: var(--fs-part);
+    color: white;
+    position: absolute;
+    bottom: 80px;
   }
 
   .color-options {
@@ -240,6 +272,6 @@ section {
     justify-content: center;
     gap: 10px;
     position: absolute;
-    bottom: 36px;
+    bottom: 40px;
   } 
 }

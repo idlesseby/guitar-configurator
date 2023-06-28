@@ -13,7 +13,6 @@ export default function App({ position = states.cameraPos, fov = 25 }) {
       eventSource={document.getElementById('root')}
       eventPrefix="client"
     >
-      <color attach="background" args={['#C1D1FF']} />
       <spotLight position={[10, 20, 10]} penumbra={1} intensity={0.5} color="#FFBC68" />
       <ambientLight intensity={0.25} />
       <Environment preset="city" />

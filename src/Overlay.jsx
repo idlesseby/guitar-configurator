@@ -28,11 +28,11 @@ const partCamPos = {
 const parts = ['Finish', 'Knobs', 'Ivory', 'Plastic', 'Fretboard', 'Metal', 'Strings']
 
 const colors = {
-  FinishColors: ['#fff', '#ffd700', '#008b00', '#800080', '#00008b', '#8b0000', '#222'],
-  KnobsColors: ['#fff', '#ffd700', '#008b00', '#800080', '#00008b', '#8b0000', '#222'],
-  IvoryColors: ['#fff', '#ffd700', '#008b00', '#800080', '#00008b', '#8b0000', '#222'],
-  PlasticColors: ['#fff', '#ffd700', '#008b00', '#800080', '#00008b', '#8b0000', '#222'],
-  FretboardColors: ['#fff', '#DFD7C8', '#BC8F8F', '#D2B04C', '#321A18', '#222'],
+  FinishColors: ['#fff', '#F5E73C', '#FA8D1C', '#F53F32', '#DE3AD3', '#21DE4C', '#4A4CF5', '#222'],
+  KnobsColors: ['#fff', '#F5E73C', '#FA8D1C', '#F53F32', '#DE3AD3', '#21DE4C', '#4A4CF5', '#222'],
+  IvoryColors: ['#fff', '#F5E73C', '#FA8D1C', '#F53F32', '#DE3AD3', '#21DE4C', '#4A4CF5', '#222'],
+  PlasticColors: ['#fff', '#F5E73C', '#FA8D1C', '#F53F32', '#DE3AD3', '#21DE4C', '#4A4CF5', '#222'],
+  FretboardColors: ['#DFD7C8', '#BC8F8F', '#D2B04C', '#321A18', '#222'],
   MetalColors: ['#F2F4FA', '#545761', '#ffd700', '#cd7f32'],
   StringsColors: ['#F2F4FA', '#545761', '#ffd700', '#cd7f32'],
 }
@@ -50,7 +50,7 @@ export default function Overlay() {
 
 function Intro() {
   return(
-    <section key="main">
+    <section id="main">
       <div className="main--container">
         <div>
           <h1>CUSTOM <br/> GUITAR</h1>
@@ -79,7 +79,7 @@ function Customizer() {
   const snap = useSnapshot(states)
 
   return(
-    <section key="custom">
+    <section id="custom">
       <div className="customizer">
         <div className="options">
           <div className='part-options'>
@@ -95,9 +95,9 @@ function Customizer() {
                 gsap.to(states.cameraFocus, {...partCamFocus[states.selectedPart], duration: 1})
               }}
             >
-              <BsArrowLeft style={{fontSize: '24px'}} />
+              <BsArrowLeft className='part-arrow arrow-left' />
             </div>
-            <div style={{color: 'white'}}>{states.selectedPart}</div>
+            <div className='part-name'>{states.selectedPart}</div>
             <div
               onClick={() => {
                 if(count === 6) {
@@ -110,7 +110,7 @@ function Customizer() {
                 gsap.to(states.cameraFocus, {...partCamFocus[states.selectedPart], duration: 1})
               }}
             >
-              <BsArrowRight style={{fontSize: '24px'}}/>
+              <BsArrowRight className='part-arrow arrow-right'/>
             </div>
           </div>
           <div className="color-options">
