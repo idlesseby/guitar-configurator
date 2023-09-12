@@ -1,0 +1,9 @@
+.viewer {
+  flex: 1;
+}
+
+/* Desktop Styles */
+
+@media (min-width: 1200px) {
+  
+}
