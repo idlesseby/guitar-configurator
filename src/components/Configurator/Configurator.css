@@ -1,36 +1,36 @@
 .configurator {
-  padding: 0 20px 20px 20px;
-  overflow-y: auto;
-  max-height: 25%;
+  padding: 10px 0 20px 24px;
+  border-top: 1px solid lightgray;
 }
 
-span {
-  font-size: 22px;
+p {
+  font-size: 16px;
+  margin-bottom: 2px;
+}
+
+.part-selection, .color-selection {
+  display: flex;
+  overflow-x: auto;
+  gap: 10px;
 }
 
 .part-selection {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
+  margin-bottom: 8px;
 }
 
 .part-button {
-  width: 100px;
-  height: 50px;
+  padding: 12px 28px;
   background-color: white;
   border: 1px solid lightgray;
-  border-radius: 10px;
-}
-
-.color-selection {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
+  border-radius: 20px;
+  color: black;
+  font-size: 20px;
 }
 
 .color-button {
-  border: 1px solid black;
+  border: 1px solid lightgray;
   border-radius: 10px;
+  padding: 20px 32px;
 }
 
 /* Desktop Styles */
@@ -38,11 +38,22 @@ span {
 @media (min-width: 1200px) {
   .configurator {
     padding: 40px;
-    max-width: 40%;
+    max-width: 30%;
     max-height: 100%;
+    border-right: 1px solid lightgray;
   }
 
-  span {
-    font-size: 28px;
+  .part-selection, .color-selection {
+    overflow: hidden;
+    flex-wrap: wrap;
+  }
+
+  .part-selection {
+    margin-bottom: 32px;
+  }
+
+  p {
+    font-size: 20px;
+    margin-bottom: 4px;
   }
 }

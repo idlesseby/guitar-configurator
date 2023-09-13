@@ -4,11 +4,9 @@ import { Canvas, useFrame } from '@react-three/fiber'
 import * as THREE from 'three'
 import { useSnapshot } from 'valtio'
 import { states } from '../../data/store'
-import './Viewer.css'
 
 export default function Viewer({ position = states.cameraPos, fov = 25 }) {
   return (
-    <div className="viewer">
       <Canvas
         shadows
         camera={{position, fov}}
@@ -18,18 +16,17 @@ export default function Viewer({ position = states.cameraPos, fov = 25 }) {
         <spotLight position={[10, 20, 10]} penumbra={1} intensity={0.5} color="#FFBC68" />
         <ambientLight intensity={0.25} />
         <Environment preset="city" />
-        <PresentationControls speed={1.5} global zoom={0.7} polar={[-0.1, Math.PI / 8]}>
-          <CameraRig>
-            <Center>
-              <Guitar/>
-            </Center>
-          </CameraRig>
-          <AccumulativeShadows position={[0, -0.325, 0]} frames={100} alphaTest={0.9} scale={10}>
-            <RandomizedLight amount={8} radius={10} ambient={0.5} position={[1, 5, -1]} />
-          </AccumulativeShadows>
-        </PresentationControls>
+          <PresentationControls speed={1.5} global zoom={0.7} polar={[-0.1, Math.PI / 8]}>
+            <CameraRig>
+              <Center>
+                <Guitar/>
+              </Center>
+            </CameraRig>
+            <AccumulativeShadows position={[0, -0.315, 0]} frames={100} alphaTest={0.9} scale={10}>
+              <RandomizedLight amount={8} radius={10} ambient={0.5} position={[1, 5, -1]} />
+            </AccumulativeShadows>
+          </PresentationControls>
       </Canvas>
-    </div>
   )
 }
 
@@ -42,7 +39,6 @@ function Guitar(props) {
   materials.Knobs.color = new THREE.Color(snap.selectedKnobsColor)
   materials.Ivory.color = new THREE.Color(snap.selectedIvoryColor)
   materials.Plastic.color = new THREE.Color(snap.selectedPlasticColor) 
-  materials['Fretboard Wood'].color = new THREE.Color(snap.selectedFretboardColor)
   materials['Silver Metal'].color = new THREE.Color(snap.selectedStringsColor)
   materials['Golden Metal'].color = new THREE.Color(snap.selectedMetalColor)
 

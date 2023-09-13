@@ -1,0 +1,23 @@
+.overlay {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+}
+
+.icon {
+  font-size: 32px;
+}
+
+/* Desktop Styles */
+
+@media (min-width: 1200px) {
+  .overlay {
+    top: unset;
+    right: 32px;
+    bottom: 16px;
+  }
+
+  .icon {
+    font-size: 48px;
+  }
+}

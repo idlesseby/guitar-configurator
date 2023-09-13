@@ -7,14 +7,13 @@ import gsap from "gsap"
 const Configurator = () => {
   const snap = useSnapshot(states)
 
-  const parts = ['Finish', 'Knobs', 'Ivory', 'Plastic', 'Fretboard', 'Metal', 'Strings']
+  const parts = ['Finish', 'Knobs', 'Ivory', 'Plastic', 'Metal', 'Strings']
 
   const partCamFocus = {
     'Finish': [0, 0, 0],
     'Knobs': [0.06, -0.225, 0],
     'Ivory': [0, 0.225, 0],
     'Plastic': [0, -0.15, 0],
-    'Fretboard': [0, 0.0625, 0],
     'Metal': [0, -0.15, 0],
     'Strings': [0, 0.1, 0],
   }
@@ -30,23 +29,22 @@ const Configurator = () => {
   }
 
   const colors = {
-    FinishColors: ['#fff', '#F5E73C', '#FA8D1C', '#F53F32', '#DE3AD3', '#21DE4C', '#4A4CF5', '#222'],
-    KnobsColors: ['#fff', '#F5E73C', '#FA8D1C', '#F53F32', '#DE3AD3', '#21DE4C', '#4A4CF5', '#222'],
-    IvoryColors: ['#fff', '#F5E73C', '#FA8D1C', '#F53F32', '#DE3AD3', '#21DE4C', '#4A4CF5', '#222'],
-    PlasticColors: ['#fff', '#F5E73C', '#FA8D1C', '#F53F32', '#DE3AD3', '#21DE4C', '#4A4CF5', '#222'],
-    FretboardColors: ['#DFD7C8', '#BC8F8F', '#D2B04C', '#321A18', '#222'],
+    FinishColors: ['#fff', '#F5D81B', '#FA8D1C', '#F53F32', '#DE3AD3', '#21DE4C', '#4A4CF5', '#222'],
+    KnobsColors: ['#fff', '#F5D81B', '#FA8D1C', '#F53F32', '#DE3AD3', '#21DE4C', '#4A4CF5', '#222'],
+    IvoryColors: ['#fff', '#F5D81B', '#FA8D1C', '#F53F32', '#DE3AD3', '#21DE4C', '#4A4CF5', '#222'],
+    PlasticColors: ['#fff', '#F5D81B', '#FA8D1C', '#F53F32', '#DE3AD3', '#21DE4C', '#4A4CF5', '#222'],
     MetalColors: ['#F2F4FA', '#545761', '#ffd700', '#cd7f32'],
     StringsColors: ['#F2F4FA', '#545761', '#ffd700', '#cd7f32'],
   }
 
   return (
     <section className='configurator'>
-      <span>Part</span>
+      <p>Part</p>
       <div className='part-selection'>
         {parts.map((part, index) => {
           return <button 
             className='part-button'
-            style={states.selectedPart === parts[index] ? {backgroundColor: 'black', color: 'white'} : null}
+            style={states.selectedPart === parts[index] ? {backgroundColor: 'black', color: 'white', fontWeight: '500'} : null}
             onClick={() => {
               states.selectedPart = parts[index]
               gsap.to(states.cameraPos, {...partCamPos[states.selectedPart], duration: 1})
@@ -57,12 +55,12 @@ const Configurator = () => {
           </button>
         })}
       </div>
-      <span>Color</span>
+      <p>Color</p>
       <div className="color-selection">
-            {colors[states.selectedPart + 'Colors'].map(color => (
+            {colors[states.selectedPart + 'Colors'].map((color, index) => (
               <div
                 className="color-button"
-                style={{ background: color, height: '40px', width: '40px' }}
+                style={states['selected' + states.selectedPart + 'Color'] === colors[states.selectedPart + 'Colors'][index] ? {border: '1px solid black', background: color} : {background: color}}
                 onClick={() => {
                   states['selected' + states.selectedPart + 'Color'] = color
                 }}>
