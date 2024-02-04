@@ -1,25 +1,29 @@
 import React, { useRef } from "react";
-import { Center, useGLTF, Environment, PresentationControls, AccumulativeShadows, RandomizedLight } from '@react-three/drei'
-import { Canvas, useFrame } from '@react-three/fiber'
+import { Center, useGLTF, Environment, PresentationControls, AccumulativeShadows, RandomizedLight, Float } from '@react-three/drei'
+import { Canvas, useFrame, useThree } from '@react-three/fiber'
 import * as THREE from 'three'
 import { useSnapshot } from 'valtio'
 import { states } from '../../data/store'
 
-export default function Viewer({ position = states.cameraPos, fov = 25 }) {
+export default function Viewer(props) {
+
   return (
       <Canvas
         shadows
-        camera={{position, fov}}
+        camera={{position: states.cameraPos, fov: 25}}
         eventSource={document.getElementById('root')}
         eventPrefix="client"
+        {...props}
       >
-        <spotLight position={[10, 20, 10]} penumbra={1} intensity={0.5} color="#FFBC68" />
-        <ambientLight intensity={0.25} />
-        <Environment preset="city" />
+        <ambientLight intensity={0.5} />
+        <Environment files="https://dl.polyhaven.org/file/ph-assets/HDRIs/hdr/1k/potsdamer_platz_1k.hdr" blur={1} />
+        <color attach="background" args={['#101010']} />
           <PresentationControls speed={1.5} global zoom={0.7} polar={[-0.1, Math.PI / 8]}>
             <CameraRig>
               <Center>
-                <Guitar/>
+                <Float floatIntensity={0.05} rotationIntensity={0.75}>
+                  <Guitar/>
+                </Float>
               </Center>
             </CameraRig>
             <AccumulativeShadows position={[0, -0.315, 0]} frames={100} alphaTest={0.9} scale={10}>
@@ -33,7 +37,7 @@ export default function Viewer({ position = states.cameraPos, fov = 25 }) {
 function Guitar(props) {
   const snap = useSnapshot(states)
 
-  const { nodes, materials } = useGLTF("/lespaul.glb");
+  const { nodes, materials } = useGLTF("/lespaul_rough.glb");
 
   materials.Finish.color = new THREE.Color(snap.selectedFinishColor)
   materials.Knobs.color = new THREE.Color(snap.selectedKnobsColor)
@@ -100,10 +104,12 @@ function Guitar(props) {
 
 function CameraRig({ children }) {
   const group = useRef()
+  
 
   useFrame((state) => {
     state.camera.position.set(...states.cameraPos)
     state.camera.lookAt(...states.cameraFocus)
+    //group.current.rotation.set(state.pointer.y / 10, -state.pointer.x / 5, 0)
   })
 
   return <group ref={group}>{children}</group>
