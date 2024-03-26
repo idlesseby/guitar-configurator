@@ -49,8 +49,7 @@ const Overlay = () => {
               states.selectedPart = parts[index]
               gsap.to(states.cameraPos, {...partCamPos[states.selectedPart], duration: 1})
               gsap.to(states.cameraFocus, {...partCamFocus[states.selectedPart], duration: 1})
-            }}
-          >
+            }}>
             {part}
           </button>
         })}

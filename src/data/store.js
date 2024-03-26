@@ -1,7 +1,7 @@
 import { proxy } from 'valtio'
 
 const states = proxy({
-  cameraPos: [0, 0, 1.75],
+  cameraPos: [0, 0, 2.5],
   cameraFocus: [0,0,0],
   selectedFinishColor: '#222',
   selectedKnobsColor: '#222',

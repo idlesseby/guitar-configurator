@@ -1,14 +1,13 @@
-import React from "react";
-import './App.css'
-import Viewer from "./components/Viewer/Viewer";
+import React, { Suspense } from "react";
+import Scene from "./components/Scene";
 import Overlay from "./components/Overlay/Overlay";
 
 
 export default function App() {
   return <>
-    <div className="container">
-      <Viewer style={{borderRadius: "10%" }}/>
-    </div>
+    <Suspense fallback={null}>
+      <Scene/>
+    </Suspense>
     <Overlay/>
   </>
 }
