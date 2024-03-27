@@ -16,9 +16,7 @@
     "lamina": "^1.1.23",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-icons": "^4.9.0",
-    "three": "^0.153.0",
-    "valtio": "^1.10.5"
+    "three": "^0.153.0"
   },
   "devDependencies": {
     "@types/react": "^18.0.37",

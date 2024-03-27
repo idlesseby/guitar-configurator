@@ -1,54 +1,54 @@
-import React, { useRef } from "react";
-import { Center, useGLTF, Environment, PresentationControls, AccumulativeShadows, RandomizedLight, Float, OrbitControls } from '@react-three/drei'
+import React, { useState } from "react";
+import { Center, useGLTF, Environment, PresentationControls, Float, OrbitControls, Text } from '@react-three/drei'
 import { Canvas, useFrame } from '@react-three/fiber'
 import * as THREE from 'three'
-import { useSnapshot } from 'valtio'
-import { states } from '../data/store'
 import { GridBox } from "./GridBox";
+import { ColorPicker } from "./ColorPicker";
 
-export default function Scene(props) {
+export default function Scene() {
+  const [guitarColor, setGuitarColor] = useState('#222')
+
   return (
     <Canvas
       shadows
-      camera={{position: states.cameraPos, fov: 25}}
+      camera={{position: [0, 0, 2.625], fov: 25}}
       eventSource={document.getElementById('root')}
       eventPrefix="client"
-      {...props}
     >
       <ambientLight intensity={0.5} />
-      <Environment preset="sunset" blur={1} />
+      <Environment preset="sunset" />
       <color attach="background" args={['#101010']} />
+
       <GridBox/>      
-      <OrbitControls/>
-      {/* <CameraRig> */}
+      <ColorPicker changeColor={setGuitarColor}/>
+      <ModelName/>
+
+      {/* <OrbitControls/> */}
+      <PresentationControls speed={1.5} global polar={[-0.1, Math.PI / 8]} cursor={false}>
         <Center>
           <Float floatIntensity={0.05} rotationIntensity={0.75}>
-            <Guitar/>
+            <Guitar color={guitarColor}/>
           </Float>
         </Center>
-      {/* </CameraRig> */}
-      
-      {/* <AccumulativeShadows position={[0, -0.315, 0]} frames={100} alphaTest={0.9} scale={10}>
-        <RandomizedLight amount={8} radius={10} ambient={0.5} position={[1, 5, -1]} />
-      </AccumulativeShadows> */}
+      </PresentationControls>
+    
     </Canvas>
   )
 }
 
-function Guitar(props) {
-  const snap = useSnapshot(states)
+function ModelName() {
+  return (
+    <Text position={[0,-0.015, -1.09]} scale={0.5} anchorX="center" anchorY="middle">LESPAUL</Text>
+  )
+}
 
+function Guitar({color}) {
   const { nodes, materials } = useGLTF("/models/lespaul_rough.glb");
 
-  materials.Finish.color = new THREE.Color(snap.selectedFinishColor)
-  materials.Knobs.color = new THREE.Color(snap.selectedKnobsColor)
-  materials.Ivory.color = new THREE.Color(snap.selectedIvoryColor)
-  materials.Plastic.color = new THREE.Color(snap.selectedPlasticColor) 
-  materials['Silver Metal'].color = new THREE.Color(snap.selectedStringsColor)
-  materials['Golden Metal'].color = new THREE.Color(snap.selectedMetalColor)
+  materials.Finish.color = new THREE.Color(color)
 
   return (
-    <group {...props} dispose={null}>
+    <group dispose={null} scale={1.25}>
       <group>
         <mesh
           castShadow
@@ -101,19 +101,6 @@ function Guitar(props) {
       </group>
     </group>
   )
-}
-
-function CameraRig({ children }) {
-  const group = useRef()
-  
-
-  useFrame((state) => {
-    state.camera.position.set(...states.cameraPos)
-    state.camera.lookAt(...states.cameraFocus)
-    //group.current.rotation.set(state.pointer.y / 10, -state.pointer.x / 5, 0)
-  })
-
-  return <group ref={group}>{children}</group>
 }
 
 useGLTF.preload("/models/lespaul.glb");

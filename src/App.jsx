@@ -8,6 +8,6 @@ export default function App() {
     <Suspense fallback={null}>
       <Scene/>
     </Suspense>
-    <Overlay/>
+    {/* <Overlay/> */}
   </>
 }

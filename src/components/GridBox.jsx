@@ -21,11 +21,11 @@ export function GridBox() {
   })
 
   return <>
-    <mesh rotation-x={-Math.PI * 0.5} position={[0, -0.325, 0]} material={gridMaterial}>
+    <mesh rotation-x={-Math.PI * 0.5} position={[0, -0.4, 0]} material={gridMaterial}>
       <planeGeometry args={[3, 3]} />
     </mesh>
 
-    <mesh position={[0, 0.675, -1]} material={gridMaterial}>
+    <mesh position={[0, 0.6, -1.125]} material={gridMaterial}>
       <planeGeometry args={[3, 2]} />
     </mesh>
   </>
