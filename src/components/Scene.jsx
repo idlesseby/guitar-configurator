@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { Center, useGLTF, Environment, PresentationControls, Float, OrbitControls, Text } from '@react-three/drei'
-import { Canvas, useFrame } from '@react-three/fiber'
-import * as THREE from 'three'
+import { Canvas, useThree } from '@react-three/fiber'
 import { GridBox } from "./GridBox";
 import { ColorPicker } from "./ColorPicker";
+import { Lespaul } from "./Lespaul";
 
 export default function Scene() {
   const [guitarColor, setGuitarColor] = useState('#222')
@@ -23,84 +23,28 @@ export default function Scene() {
       <ColorPicker changeColor={setGuitarColor}/>
       <ModelName/>
 
-      {/* <OrbitControls/> */}
       <PresentationControls speed={1.5} global polar={[-0.1, Math.PI / 8]} cursor={false}>
         <Center>
           <Float floatIntensity={0.05} rotationIntensity={0.75}>
-            <Guitar color={guitarColor}/>
+            <Lespaul color={guitarColor}/>
           </Float>
         </Center>
       </PresentationControls>
-    
     </Canvas>
   )
 }
 
 function ModelName() {
-  return (
-    <Text position={[0,-0.015, -1.09]} scale={0.5} anchorX="center" anchorY="middle">LESPAUL</Text>
-  )
-}
+  const { viewport } = useThree()
 
-function Guitar({color}) {
-  const { nodes, materials } = useGLTF("/models/lespaul_rough.glb");
-
-  materials.Finish.color = new THREE.Color(color)
+  viewport.width < 0.55
 
   return (
-    <group dispose={null} scale={1.25}>
+    viewport.width < 0.55 ? 
       <group>
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Generic_Les_Paul_Mesh.geometry}
-          material={materials.Plastic}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Generic_Les_Paul_Mesh_1.geometry}
-          material={materials["Golden Metal"]}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Generic_Les_Paul_Mesh_2.geometry}
-          material={materials["Fretboard Wood"]}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Generic_Les_Paul_Mesh_3.geometry}
-          material={materials.Ivory}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Generic_Les_Paul_Mesh_4.geometry}
-          material={materials.Finish}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Generic_Les_Paul_Mesh_5.geometry}
-          material={materials["Silver Metal"]}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Generic_Les_Paul_Mesh_6.geometry}
-          material={materials.Knobs}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Generic_Les_Paul_Mesh_7.geometry}
-          material={materials["Pickup Wrap Fabric"]}
-        />
-      </group>
-    </group>
+        <Text position={[0,0.23, -1.09]} scale={0.3} anchorX="center" anchorY="middle">LES</Text>
+        <Text position={[0,-0.02, -1.09]} scale={0.3} anchorX="center" anchorY="middle">PAUL</Text>
+      </group> :
+      <Text position={[0,0.1775, -1.09]} scale={0.5} anchorX="center" anchorY="middle">LESPAUL</Text>
   )
 }
-
-useGLTF.preload("/models/lespaul.glb");

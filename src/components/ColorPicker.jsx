@@ -1,19 +1,31 @@
+import { useEffect, useState } from "react"
+
 export const ColorPicker = ({changeColor}) => {
+  const [hovered, setHovered] = useState(false)
+
+  useEffect(() => {
+    document.body.style.cursor = hovered ? 'pointer' : 'auto'
+  }, [hovered])
+
   return <>
     <mesh 
       rotation-x={-Math.PI * 0.5} 
       position={[-0.095, -0.3999, 0.28]}
+      onPointerOver={() => setHovered(true)}
+      onPointerOut={() => setHovered(false)}
       onClick={() => {
         changeColor("#F53F32")
       }}
     >
       <circleGeometry args={[0.05,32]}/>
-      <meshStandardMaterial color={0xF53F32}/>
+      <meshStandardMaterial color={0xF53F32} />
     </mesh>
 
     <mesh 
       rotation-x={-Math.PI * 0.5} 
-      position={[0.095, -0.399, 0.28]}
+      position={[0.095, -0.3999, 0.28]}
+      onPointerOver={() => setHovered(true)}
+      onPointerOut={() => setHovered(false)}
       onClick={() => {
         changeColor("#222")
       }}
@@ -25,6 +37,8 @@ export const ColorPicker = ({changeColor}) => {
     <mesh 
       rotation-x={-Math.PI * 0.5} 
       position={[-0.095, -0.3999, 0.465]} 
+      onPointerOver={() => setHovered(true)}
+      onPointerOut={() => setHovered(false)}
       onClick={() => {
         changeColor("#4A4CF5")
       }}
@@ -35,7 +49,9 @@ export const ColorPicker = ({changeColor}) => {
 
     <mesh 
       rotation-x={-Math.PI * 0.5} 
-      position={[0.095, -0.399, 0.465]}
+      position={[0.095, -0.3999, 0.465]}
+      onPointerOver={() => setHovered(true)}
+      onPointerOut={() => setHovered(false)}
       onClick={() => {
         changeColor("#DE3AD3")
       }}
@@ -47,6 +63,8 @@ export const ColorPicker = ({changeColor}) => {
     <mesh 
       rotation-x={-Math.PI * 0.5} 
       position={[-0.095, -0.3999, 0.65]} 
+      onPointerOver={() => setHovered(true)}
+      onPointerOut={() => setHovered(false)}
       onClick={() => {
         changeColor("#FFDD00")
       }}
@@ -57,7 +75,9 @@ export const ColorPicker = ({changeColor}) => {
 
     <mesh 
       rotation-x={-Math.PI * 0.5} 
-      position={[0.095, -0.399, 0.65]}
+      position={[0.095, -0.3999, 0.65]}
+      onPointerOver={() => setHovered(true)}
+      onPointerOut={() => setHovered(false)}
       onClick={() => {
         changeColor("#1D9C2F")
       }}
